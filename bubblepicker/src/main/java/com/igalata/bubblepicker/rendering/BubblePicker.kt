@@ -17,7 +17,8 @@ import com.igalata.bubblepicker.model.PickerItem
  */
 class BubblePicker : GLSurfaceView {
 
-    @ColorInt var background: Int = 0
+    @ColorInt
+    var background: Int = 0
         set(value) {
             field = value
             renderer.backgroundColor = Color(value)
@@ -75,6 +76,10 @@ class BubblePicker : GLSurfaceView {
         setRenderer(renderer)
         renderMode = RENDERMODE_CONTINUOUSLY
         attrs?.let { retrieveAttrubutes(attrs) }
+    }
+
+    fun setRenderListenerPicker(renderListener: (() -> Unit)) {
+        renderer.setRenderListenerPicker(renderListener)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

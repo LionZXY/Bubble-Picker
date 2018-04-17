@@ -23,7 +23,6 @@ import javax.microedition.khronos.opengles.GL10
  * Created by irinagalata on 1/19/17.
  */
 class PickerRenderer(val glView: View) : GLSurfaceView.Renderer {
-
     var backgroundColor: Color? = null
     var maxSelectedCount: Int? = null
         set(value) {
@@ -42,6 +41,7 @@ class PickerRenderer(val glView: View) : GLSurfaceView.Renderer {
             field = value
             Engine.centerImmediately = value
         }
+    var renderListener: (() -> Unit)? = null
 
     private var programId = 0
     private var verticesBuffer: FloatBuffer? = null
@@ -60,6 +60,11 @@ class PickerRenderer(val glView: View) : GLSurfaceView.Renderer {
         glClearColor(backgroundColor?.red ?: 1f, backgroundColor?.green ?: 1f,
                 backgroundColor?.blue ?: 1f, backgroundColor?.alpha ?: 1f)
         enableTransparency()
+        renderListener?.invoke()
+    }
+
+    fun setRenderListenerPicker(renderListener: (() -> Unit)) {
+        this.renderListener = renderListener
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
